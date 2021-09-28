@@ -7,6 +7,7 @@ import com.sparta.week03.service.MemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,7 +24,9 @@ public class MemoController {
 
     @GetMapping("/api/memos")
     public List<Memo> readMemo(){
-        return memoRepository.findAllByOrderByModifiedAtDesc();
+        LocalDateTime nowDay = LocalDateTime.now();
+        LocalDateTime minusDay = LocalDateTime.now().minusDays(1);
+        return memoRepository.findByModifiedAtBetweenOrderByModifiedAtDesc(minusDay, nowDay);
     }
 
     @PutMapping("/api/memos/{id}")
