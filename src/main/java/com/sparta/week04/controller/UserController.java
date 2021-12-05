@@ -44,4 +44,11 @@ public class UserController {
     public String forbidden() {
         return "forbidden";
     }
+
+    @GetMapping("/user/kakao/callback")
+    public String kakaoLogin(String code) {
+        userService.kakaoLogin(code);
+
+        return "redirect:/";
+    }
 }
