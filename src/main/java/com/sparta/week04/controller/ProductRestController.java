@@ -39,4 +39,9 @@ public class ProductRestController {
     public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto){
         return productService.update(id, requestDto);
     }
+
+    @GetMapping("/api/admin/products")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
 }
