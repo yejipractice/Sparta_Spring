@@ -1,9 +1,9 @@
 package com.sparta.week04.service;
 
-import com.sparta.week04.models.ItemDto;
+import com.sparta.week04.dto.ItemDto;
 import com.sparta.week04.models.Product;
-import com.sparta.week04.models.ProductMypriceRequestDto;
-import com.sparta.week04.models.ProductRepository;
+import com.sparta.week04.dto.ProductMypriceRequestDto;
+import com.sparta.week04.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
