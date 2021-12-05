@@ -18,6 +18,9 @@ public class Product extends Timestamped{
     @Id
     private Long id;
 
+    @Column(nullable = false)
+    private Long userId;
+
     // 반드시 값을 가지도록 합니다.
     @Column(nullable = false)
     private String title;
@@ -35,7 +38,8 @@ public class Product extends Timestamped{
     private int myprice;
 
     // 관심 상품 생성 시 이용합니다.
-    public Product(ProductRequestDto requestDto) {
+    public Product(ProductRequestDto requestDto, Long userId) {
+        this.userId = userId;
         this.title = requestDto.getTitle();
         this.image = requestDto.getImage();
         this.link = requestDto.getLink();
