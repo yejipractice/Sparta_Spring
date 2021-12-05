@@ -7,6 +7,7 @@ import com.sparta.week04.dto.ProductRequestDto;
 import com.sparta.week04.security.UserDetailsImpl;
 import com.sparta.week04.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class ProductRestController {
         return productService.update(id, requestDto);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/api/admin/products")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
