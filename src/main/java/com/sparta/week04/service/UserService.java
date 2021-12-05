@@ -65,11 +65,20 @@ public class UserService {
                 .orElse(null);
 
         if(kakaoUser == null) {
-            String encodedPassword = passwordEncoder.encode(password);
-            UserRole role = UserRole.USER;
+            User emailUser = userRepository.findByEmail(email)
+                    .orElse(null);
+            if(emailUser == null){
+                String encodedPassword = passwordEncoder.encode(password);
+                UserRole role = UserRole.USER;
 
-            kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
-            userRepository.save(kakaoUser);
+                kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
+                userRepository.save(kakaoUser);
+            }else{
+                kakaoUser = emailUser;
+                kakaoUser.setKakaoId(kakaoId);
+                userRepository.save(kakaoUser);
+            }
+
         }
 
         Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(username, password);
