@@ -7,6 +7,7 @@ import com.sparta.week04.dto.ProductRequestDto;
 import com.sparta.week04.security.UserDetailsImpl;
 import com.sparta.week04.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,16 @@ public class ProductRestController {
 
     // 등록된 전체 상품 목록 조회
     @GetMapping("/api/products")
-    public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Page<Product> getProducts(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         Long userId = userDetails.getUser().getId();
-        return productService.getProducts(userId);
+        page = page -1;
+        return productService.getProducts(userId, page, size, sortBy, isAsc);
     }
 
     // 신규 상품 등록

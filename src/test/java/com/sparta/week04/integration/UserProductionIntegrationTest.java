@@ -12,6 +12,7 @@ import com.sparta.week04.service.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
@@ -131,8 +132,12 @@ public class UserProductionIntegrationTest {
     @DisplayName("회원이 등록한 관심상품 조회")
     void test5() {
         // given
+        int page = 0;
+        int size = 10;
+        String sortBy = "id";
+        boolean isAsc = false;
         //then
-        List<Product> productList = productService.getProducts(userId);
+        Page<Product> productList = productService.getProducts(userId, page, size, sortBy, isAsc);
         //then
         Long createdProductId = createdProduct.getId();
         Product foundProduct = productList.stream()
