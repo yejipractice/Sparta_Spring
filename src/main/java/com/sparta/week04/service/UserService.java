@@ -32,7 +32,7 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
-    public void registerUser(SignupRequestDto requestDto){
+    public User registerUser(SignupRequestDto requestDto){
         String username = requestDto.getUsername();
         Optional<User> found = userRepository.findByUsername(username);
         if(found.isPresent()){
@@ -49,7 +49,7 @@ public class UserService {
         }
 
         User user = new User(username, password, email, role);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public void kakaoLogin(String authorizedCode) {
