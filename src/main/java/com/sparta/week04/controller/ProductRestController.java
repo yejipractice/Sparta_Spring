@@ -2,6 +2,7 @@ package com.sparta.week04.controller;
 
 import com.sparta.week04.models.Product;
 import com.sparta.week04.dto.ProductMypriceRequestDto;
+import com.sparta.week04.models.User;
 import com.sparta.week04.repository.ProductRepository;
 import com.sparta.week04.dto.ProductRequestDto;
 import com.sparta.week04.security.UserDetailsImpl;
@@ -53,5 +54,15 @@ public class ProductRestController {
     @GetMapping("/api/admin/products")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
+    }
+
+    // 상품에 폴더 추가
+    @PostMapping("/api/products/{id}/folder")
+    public Long addFolder(@PathVariable Long id,
+                          @RequestParam("folderId") Long folderId,
+                          @AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user = userDetails.getUser();
+        Product product = productService.addFolder(id, folderId, user);
+        return  product.getId();
     }
 }

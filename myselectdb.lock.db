@@ -1,0 +1,6 @@
+#FileLock
+#Thu Dec 30 01:34:06 KST 2021
+server=192.168.219.101\:55079
+hostName=192.168.219.101
+method=file
+id=17e070aaa7ea826747569f52fcbc1c09878b2de1e60
