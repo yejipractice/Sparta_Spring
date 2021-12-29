@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component // 스프링 동작 시작 시 자동 실행
+//@Component // 스프링 동작 시작 시 자동 실행
 public class TestDataRunner implements ApplicationRunner {
 
     @Autowired
