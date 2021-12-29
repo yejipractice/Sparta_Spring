@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface FolderRepository extends JpaRepository<Folder, Long> {
     List<Folder> findAllByUser(User user);
+    List<Folder> findAllByUserAndNameIn(User user, List<String> nameList); // nameList에 해당하는 것들 모두 조회
 }

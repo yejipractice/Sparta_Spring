@@ -35,13 +35,28 @@ public class FolderService {
     }
 
     public List<Folder> createFolders(List<String> folderNameList, User user) {
+        // 입력 들어온 폴더 이름들을 기준으로 조회
+        List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNameList);
         List<Folder> folderList = new ArrayList<>();
         for (String folderName : folderNameList) {
-            Folder folder = new Folder(folderName, user);
-            folderList.add(folder);
+            if(!isExistFolderName(folderName, existFolderList)){
+                Folder folder = new Folder(folderName, user);
+                folderList.add(folder);
+            }
         }
+        // 빈 배열이면 알아서 동작하지 않음
         folderList = folderRepository.saveAll(folderList);
         return folderList;
+    }
+
+    // 기존 폴더 리스트에서 folder name 이 있는지 체크
+    public boolean isExistFolderName(String folderName, List<Folder> existFolderList){
+        for (Folder existFolder : existFolderList){
+            if(existFolder.getName().equals(folderName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // 회원 ID가 소유한 폴더에 저장되어 있는 상품들 조회
