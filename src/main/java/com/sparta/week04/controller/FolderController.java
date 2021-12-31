@@ -1,12 +1,15 @@
 package com.sparta.week04.controller;
 
 import com.sparta.week04.dto.FolderCreateRequestDto;
+import com.sparta.week04.exception.ApiException;
 import com.sparta.week04.models.Folder;
 import com.sparta.week04.models.Product;
 import com.sparta.week04.security.UserDetailsImpl;
 import com.sparta.week04.service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +48,18 @@ public class FolderController {
                                              @AuthenticationPrincipal UserDetailsImpl userDetails) {
         page = page-1;
         return folderService.getProductsOnFolder(userDetails.getUser(), page, size, sortBy, isAsc, folderId);
+    }
+
+    @ExceptionHandler({ IllegalArgumentException.class})
+    public ResponseEntity<Object> handle(IllegalArgumentException ex) {
+        ApiException apiException = new ApiException(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST
+        );
+
+        return new ResponseEntity<>(
+                apiException,
+                HttpStatus.BAD_REQUEST
+        );
     }
 }
