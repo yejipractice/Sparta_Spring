@@ -45,16 +45,19 @@ public class UserTimeAop {
                 UserTime userTime = userTimeRepository.findByUser(loginUser);
                 if (userTime != null) {
                     // 로그인 회원의 기록이 있으면
+
+                    // API 전체 수행 시간
                     long totalTime = userTime.getTotalTime();
-                    long totalCount = userTime.getTotalCount();
-                    totalCount +=1;
                     totalTime = totalTime + runTime;
-                    userTime.updateTotalTime(totalTime);
-                    userTime.updateTotalCount(totalCount);
+
+                    // API 전체 수행 횟수
+                    long totalCount = userTime.getTotalCount();
+                    totalCount++;
+
+                    userTime.updateTotalTime(totalTime, totalCount);
                 } else {
                     // 로그인 회원의 기록이 없으면
-                    long totalCount = 0;
-                    userTime = new UserTime(loginUser, runTime, totalCount+1);
+                    userTime = new UserTime(loginUser, runTime);
                 }
 
                 System.out.println("[User Time] User: " + userTime.getUser().getUsername() + ", Total Time: " + userTime.getTotalTime() + " ms");
