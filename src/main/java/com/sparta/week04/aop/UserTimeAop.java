@@ -46,11 +46,15 @@ public class UserTimeAop {
                 if (userTime != null) {
                     // 로그인 회원의 기록이 있으면
                     long totalTime = userTime.getTotalTime();
+                    long totalCount = userTime.getTotalCount();
+                    totalCount +=1;
                     totalTime = totalTime + runTime;
                     userTime.updateTotalTime(totalTime);
+                    userTime.updateTotalCount(totalCount);
                 } else {
                     // 로그인 회원의 기록이 없으면
-                    userTime = new UserTime(loginUser, runTime);
+                    long totalCount = 0;
+                    userTime = new UserTime(loginUser, runTime, totalCount+1);
                 }
 
                 System.out.println("[User Time] User: " + userTime.getUser().getUsername() + ", Total Time: " + userTime.getTotalTime() + " ms");
